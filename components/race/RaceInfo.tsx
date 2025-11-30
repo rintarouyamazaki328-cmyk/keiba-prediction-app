@@ -107,7 +107,7 @@ export function RaceInfo() {
               asChild
             >
               <a
-                href={QUICK_LINKS.rakuten(race.venue, race.date)}
+                href={QUICK_LINKS.rakuten(race.date)}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -121,7 +121,7 @@ export function RaceInfo() {
               asChild
             >
               <a
-                href={QUICK_LINKS.netkeiba(race.venue, race.date)}
+                href={QUICK_LINKS.netkeiba()}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -135,7 +135,7 @@ export function RaceInfo() {
               asChild
             >
               <a
-                href={QUICK_LINKS.jra(race.venue, race.date)}
+                href={QUICK_LINKS.jra()}
                 target="_blank"
                 rel="noopener noreferrer"
               >

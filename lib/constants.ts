@@ -44,14 +44,17 @@ export const BET_TYPES = {
   wide: { label: 'ワイド', minHorses: 2 },
 } as const;
 
+// クイックリンク生成関数
+// Note: These URLs are placeholders. Real implementations would need venue codes
+// and proper URL formatting based on each site's API/URL structure
 export const QUICK_LINKS = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  rakuten: (_venue: string, date: string) => 
+  // 楽天競馬: Uses date in YYYYMMDD format for race card lookup
+  rakuten: (date: string) => 
     `https://keiba.rakuten.co.jp/race_card/list/RACEID/${date.replace(/-/g, '')}`,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  netkeiba: (_venue: string, _date: string) => 
+  // netkeiba: Links to top page (would need race ID for specific race)
+  netkeiba: () => 
     `https://race.netkeiba.com/top/`,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  jra: (_venue: string, _date: string) => 
+  // JRA公式: Links to main page
+  jra: () => 
     `https://www.jra.go.jp/`,
 } as const;

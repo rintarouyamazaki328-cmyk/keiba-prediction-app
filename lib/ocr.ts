@@ -74,12 +74,19 @@ export async function performOCR(
 }
 
 // OCR結果から馬情報を抽出
+// 日本の競馬出馬表の一般的なフォーマットを解析
 function parseHorseData(text: string): Partial<Horse>[] {
   const lines = text.split('\n').filter(line => line.trim());
   const horses: Partial<Horse>[] = [];
   
   // 馬番、馬名、騎手名のパターンを探す
+  // Pattern groups:
+  // (\d{1,2}) - 馬番 (horse number, 1-2 digits)
+  // \s*[番枠]? - optional separator like 番 or 枠
+  // ([ァ-ヶー]+|[一-龥]+) - 馬名 (horse name in katakana or kanji)
+  // ([ァ-ヶー]+|[一-龥]+)? - 騎手名 (jockey name, optional)
   const horsePattern = /(\d{1,2})\s*[番枠]?\s*([ァ-ヶー]+|[一-龥]+)\s*([ァ-ヶー]+|[一-龥]+)?/;
+  // オッズパターン: 数字（小数点含む）+ 倍
   const oddsPattern = /(\d+\.?\d*)\s*倍?/;
   
   for (const line of lines) {
@@ -98,7 +105,7 @@ function parseHorseData(text: string): Partial<Horse>[] {
         horse.odds = parseFloat(oddsMatch[1]);
       }
       
-      // 枠番を計算（馬番から推測）
+      // 枠番を計算（馬番から推測、18頭フルゲートの場合）
       if (horse.number) {
         horse.waku = Math.ceil(horse.number / 2);
         if (horse.waku > 8) horse.waku = 8;
